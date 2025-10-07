@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:5292
+
+### Get all verses
+GET {{baseUrl}}/api/my-verses
+Accept: application/json
+
+### Get a specific verse
+GET {{baseUrl}}/api/my-verses/1
+Accept: application/json
+
+### Add a new verse
+POST {{baseUrl}}/api/my-verses
+Content-Type: application/json
+
+{
+    "reference": "Philippians 4:13",
+    "text": "I can do all things through Christ who strengthens me."
+}
+
+### Delete a verse
+DELETE {{baseUrl}}/api/my-verses/1
