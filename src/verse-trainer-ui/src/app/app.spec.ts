@@ -1,23 +1,27 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { App } from './app';
+import { VersesService } from './verses.service';
 
-describe('App', () => {
+describe('App (mocked VersesService)', () => {
+  let fixture: ComponentFixture<App>;
+
   beforeEach(async () => {
+    const mockVerses = [{ id: 1, reference: 'John 3:16', text: 'For God so loved the world' }];
+    const versesStub = { getAll: () => of(mockVerses) } as Partial<VersesService>;
+
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [{ provide: VersesService, useValue: versesStub }]
     }).compileComponents();
-  });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(App);
+    fixture = TestBed.createComponent(App);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, verse-trainer-ui');
+  });
+
+  it('creates and renders verses from the service', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelectorAll('li').length).toBe(1);
+    expect(el.textContent).toContain('John 3:16');
   });
 });

@@ -4,12 +4,27 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "AllowLocalDev",
+            policy =>
+            {
+                policy.WithOrigins("http://localhost:4200", "http://127.0.0.1:4200")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+    });
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseCors("AllowLocalDev");
 }
 
 app.UseHttpsRedirection();
@@ -17,7 +32,7 @@ app.UseHttpsRedirection();
 // In-memory verse list
 var verses = new List<Verse>
 {
-    new() { Id = 1, Reference = "John 3:16", Text = "For God so loved the world..." }
+    new() { Id = 1, Reference = "John 3:16", Text = "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life." }
 };
 
 // Routes
