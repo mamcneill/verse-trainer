@@ -1,0 +1,40 @@
+.app-toolbar {
+  padding-left: 24px; // offset so it’s not flush left
+}
+
+.content {
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto; // center horizontally
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+mat-list-item {
+  margin: 8px 0;
+  height: auto !important;
+  align-items: flex-start;
+}
+
+.verse-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 8px;
+}
+
+.verse-text {
+  flex: 1;
+  white-space: normal; // allow wrapping
+  overflow: visible;
+  word-break: break-word; // prevent long words from overflowing
+}
+

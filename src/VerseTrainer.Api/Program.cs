@@ -41,7 +41,7 @@ app.MapGet("/api/my-verses/{id:int}", (int id) =>
     verses.FirstOrDefault(v => v.Id == id) is { } verse ? Results.Ok(verse) : Results.NotFound());
 app.MapPost("/api/my-verses", (Verse verse) =>
 {
-    verse.Id = verses.Max(v => v.Id) + 1;
+    verse.Id = verses.Any() ? verses.Max(v => v.Id) + 1 : 1;
     verses.Add(verse);
     return Results.Created($"/api/my-verses/{verse.Id}", verse);
 });

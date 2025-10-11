@@ -1,10 +1,34 @@
-<div class="container">
-  <h1>My Verses</h1>
-  
-  <ul *ngIf="verses$ | async as verses">
-    <li *ngFor="let verse of verses">
-      <strong>{{ verse.reference }}</strong>
-      <p>{{ verse.text }}</p>
-    </li>
-  </ul>
+<mat-toolbar color="primary" class="app-toolbar"> Verse Trainer </mat-toolbar>
+
+<div class="content">
+  <h2>Verses</h2>
+
+  <mat-list>
+    @for (verse of verses$ | async; track verse.id) {
+    <mat-list-item>
+      <div class="verse-content">
+        <div class="verse-text">
+          <strong>{{ verse.reference }}</strong> - {{ verse.text }}
+        </div>
+        <button mat-icon-button color="warn" (click)="removeVerse(verse)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-list-item>
+    }
+  </mat-list>
+
+  <div class="add-section">
+    <mat-form-field appearance="outline" class="verse-input">
+      <mat-label>New verse</mat-label>
+      <input matInput [(ngModel)]="newVerse" placeholder="Enter verse text" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="verse-input">
+      <mat-label>Reference</mat-label>
+      <input matInput [(ngModel)]="newVerseReference" placeholder="Enter verse reference" />
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="addVerse()">Add</button>
+  </div>
 </div>
